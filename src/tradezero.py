@@ -100,7 +100,7 @@ if __name__ == "__main__":
     print(f"Bid: {aapl.bid}, Ask: {aapl.ask}, Volume: {aapl.volume}")
 
     # Passage d'un ordre de vente à découvert sur AAPL
-    tz.market_order(Order.SHORT, "AAPL", 200)
+    tz.market_order(Order.BUY, "AAPL", 200)
 
     # Vérification du portefeuille et passage d'un ordre limite si non investi sur AMD
     if not tz.Portfolio.invested("AMD"):
