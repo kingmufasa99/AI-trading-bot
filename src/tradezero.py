@@ -88,8 +88,10 @@ class TradeZero:
 
 # Exemple d'utilisation
 if __name__ == "__main__":
-    # Création de la connexion TradeZero
-    tz = TradeZero(user_name="mon_user", password="mon_password")
+
+    user_name = str(input("Entrez votre usename: "))
+    password = str(input("Entrez votre password: "))
+    tz = TradeZero(user_name, password)
     tz.login()
     tz.conn()
 
@@ -108,15 +110,16 @@ if __name__ == "__main__":
         tz.Portfolio.add_position("AMD", 100)
 
     # Localisation et créditation d'actions
+    new_symbol_uber="uber"
     while True:
         try:
-            max_price = float(input("Entrez le prix maximum souhaité : "))
+            max_price = float(input(f"Entrez le prix maximum souhaité pour {new_symbol_uber}: "))
             break
         except ValueError:
             print("Entrée invalide. Veuillez saisir un nombre réel.")
 
-    tz.locate_stock("uber", 100, max_price)
-    tz.credit_locates("uber")
+    tz.locate_stock(new_symbol_uber, 100, max_price)
+    tz.credit_locates(new_symbol_uber)
 
     # Accès rapide aux propriétés bid, ask, last
     print(f"Bid rapide: {tz.bid}, Ask rapide: {tz.ask}, Last rapide: {tz.last}")
