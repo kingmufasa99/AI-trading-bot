@@ -62,11 +62,20 @@ class TradeZero:
         print("[TradeZero] Fermeture de la session et arrêt du driver.")
         self._logged_in = False
 
+    @property
+    def bid(self):
+        """Retourne le bid du titre actuellement affiché."""
+        return self.data(self.current_symbol()).bid
 
+    @property
+    def ask(self):
+        """Retourne l'ask du titre actuellement affiché."""
+        return self.data(self.current_symbol()).ask
 
     @property
     def last(self):
         """Retourne la dernière valeur de transaction."""
+        # Vous pouvez également implémenter ce calcul via self.data(...)
         return 145.00
 
     def current_symbol(self):
@@ -86,7 +95,7 @@ if __name__ == "__main__":
 
     # Récupération des données pour AAPL
     aapl = tz.data("AAPL")
-    print(f"Stock:{aapl.symbol},  Bid: {aapl.bid}, Ask: {aapl.ask}, Volume: {aapl.volume}")
+    print(f"Stock: {aapl.symbol},  Bid: {aapl.bid}, Ask: {aapl.ask}, Volume: {aapl.volume}")
 
     # Passage d'un ordre de vente à découvert sur AAPL
     tz.market_order(Order.BUY, "AAPL", 200)
@@ -97,9 +106,6 @@ if __name__ == "__main__":
         tz.limit_order(Order.BUY, "AMD", 100, limit_price)
         # Simulation : ajout d'une position dans le portefeuille
         tz.Portfolio.add_position("AMD", 100)
-
-    # TODO: Récupération de notifications?
-
 
     # Localisation et créditation d'actions
     while True:
@@ -122,5 +128,3 @@ if __name__ == "__main__":
 
     # Fermeture de la session
     tz.exit()
-
-
