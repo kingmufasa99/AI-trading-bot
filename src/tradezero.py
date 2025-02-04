@@ -62,18 +62,7 @@ class TradeZero:
         print("[TradeZero] Fermeture de la session et arrêt du driver.")
         self._logged_in = False
 
-    @property
-    def bid(self):
-        """
-        Retourne la valeur du bid pour le titre actuellement affiché dans le panneau supérieur.
-        Pour la simulation, on retourne une valeur fixe.
-        """
-        return 145.18
 
-    @property
-    def ask(self):
-        """Retourne la valeur de l'ask."""
-        return 145.21
 
     @property
     def last(self):
@@ -97,7 +86,7 @@ if __name__ == "__main__":
 
     # Récupération des données pour AAPL
     aapl = tz.data("AAPL")
-    print(f"Bid: {aapl.bid}, Ask: {aapl.ask}, Volume: {aapl.volume}")
+    print(f"Stock:{aapl.symbol},  Bid: {aapl.bid}, Ask: {aapl.ask}, Volume: {aapl.volume}")
 
     # Passage d'un ordre de vente à découvert sur AAPL
     tz.market_order(Order.BUY, "AAPL", 200)
@@ -109,14 +98,18 @@ if __name__ == "__main__":
         # Simulation : ajout d'une position dans le portefeuille
         tz.Portfolio.add_position("AMD", 100)
 
-    # Récupération des trois dernières notifications
-    notifications = tz.Notification.get_notifications(3)
-    print("Notifications récentes :")
-    for note in notifications:
-        print(note)
+    # TODO: Récupération de notifications?
+
 
     # Localisation et créditation d'actions
-    tz.locate_stock("uber", 100, max_price=0.10)
+    while True:
+        try:
+            max_price = float(input("Entrez le prix maximum souhaité : "))
+            break
+        except ValueError:
+            print("Entrée invalide. Veuillez saisir un nombre réel.")
+
+    tz.locate_stock("uber", 100, max_price)
     tz.credit_locates("uber")
 
     # Accès rapide aux propriétés bid, ask, last
